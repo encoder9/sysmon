@@ -6,8 +6,9 @@
 
 use JSON;
 use LWP::UserAgent;
+use Data::Dumper;
 
-my $portalBaseURL = 'http://localhost/sysmon/'
+my $portalBaseURL = 'http://localhost/sysmon/index.pl';
 my $outputData = 0;
 my %payload = ();
 
@@ -36,7 +37,13 @@ $js->allow_blessed(1);
 $js->convert_blessed(1);
 my $jsonString = $js->utf8->encode(\%payload);
 
+my $ua = LWP::UserAgent->new();
+$ua->agent('Sysmon/0.1');
 
+my $res = $ua->post($portalBaseURL, {
+	c => 'updateHostData', 
+	p => $jsonString
+});
 
 exit(0);
 
@@ -98,7 +105,7 @@ sub processTop {
 		my $nice = $tb[4];
 		my $virt = $tb[5];
 		my $res = $tb[6];
-		my $she = $tb[7];
+		my $shr = $tb[7];
 		my $s = $tb[8];
 		my $cpu = $tb[9];
 		my $mem = $tb[10];
@@ -113,7 +120,7 @@ sub processTop {
 				nice => $nice, 
 				virt => $virt, 
 				res => $res, 
-				she => $she, 
+				shr => $shr, 
 				s => $s, 
 				cpu => $cpu, 
 				mem => $mem, 
@@ -210,6 +217,9 @@ sub processMISC {
 	
 	$payload{host} = `hostname`;
 	$payload{date} = `date`;
+	
+	$payload{host} =~ s/\n//;
+	$payload{date} =~ s/\n//;
 }
 
 sub processW {

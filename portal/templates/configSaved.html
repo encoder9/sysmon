@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>System Monitor - Created by Bradley J. Gibby :)</title>
+		<link rel="stylesheet" type="text/css" href="styles/jquery-ui.min.css">
+		<link rel="stylesheet" type="text/css" href="styles/jquery-ui.structure.min.css">
+		<link rel="stylesheet" type="text/css" href="styles/jquery-ui.theme.min.css">
+		
+		<script src="scripts/jquery-2.1.1.min.js"></script>
+		<script src="scripts/jquery-ui.min.js"></script>
+	</head>
+	<body>
+		<h1 style="margin-top: 0px;">System Monitor</h1>
+		<h4>Created by Bradley J. Gibby :)</h4>
+		<h3>System Installation - Configuration Saved</h3>
+		<div style="display: _%success%_">
+			<p>
+				Your configuration data has been successfully saved. All database tables have been successfully created. You are now ready to start your daemons.
+			</p>
+			<p>
+				<a href="index.pl">Click here</a> to load your dashboard. Please note that no data has been captured just yet.
+			</p>
+		</div>
+		<div style="display: _%failed%_">
+			<p>
+				Your configuration data has been successfully saved but I was unable to connect to the database you specified. Please go back and try again.
+			</p>
+		</div>
+		<script>
+		
+		$(function() {
+			
+		})
+		
+		</script>
+	</body>
+</html>

@@ -1,8 +1,1 @@
-{
-	"database": {
-		"dsn": "", 
-		"uid": "", 
-		"pwd": "", 
-		"host": ""
-	}
-}
+{"database":{"pwd":"sysmon","dsn":"dbi:mysql:sysmon","host":"localhost","uid":"sysmon"}}

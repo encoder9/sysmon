@@ -2,8 +2,76 @@
 <html>
 	<head>
 		<title>System Monitor - Created by Bradley J. Gibby :)</title>
+		<link rel="stylesheet" type="text/css" href="styles/jquery-ui.min.css">
+		<link rel="stylesheet" type="text/css" href="styles/jquery-ui.structure.min.css">
+		<link rel="stylesheet" type="text/css" href="styles/jquery-ui.theme.min.css">
+		
+		<script src="scripts/jquery-2.1.1.min.js"></script>
+		<script src="scripts/jquery-ui.min.js"></script>
 	</head>
 	<body>
-		Test
+		<h1 style="margin-top: 0px;">System Monitor</h1>
+		<h4>Created by Bradley J. Gibby :)</h4>
+		<h3>System Installation</h3>
+		<p>
+			We've noticed that your config.json file is missing your database configuration details which suggests that this is your first time using sysmon.
+		</p>
+		<p>
+			Please enter your database details below. Typically you would create a clean database and provide the credentials for it here. sysmon will then create the appropriate tables automatically for you.
+		</p>
+		<form action="index.pl" method="POST" onsubmit="return validate();">
+			<input type="hidden" id="c" name="c" value="saveConfig">
+			<label for="dsn">
+				Database DSN (eg. dbi:SQL Platform:database_name) <em>don't include host here!</em>
+			</label><br>
+			<input type="text" id="dsn" name="dsn" style="width: 200px;"><br>
+			<label for="uid">
+				Database Username
+			</label><br>
+			<input type="text" id="uid" name="uid" style="width: 200px;"><br>
+			<label for="pwd">
+				Database Password
+			</label><br>
+			<input type="text" id="pwd" name="pwd" style="width: 200px;"><br>
+			<label for="host">
+				Database Host
+			</label><br>
+			<input type="text" id="host" name="host" style="width: 200px;" value="localhost"><br>
+			<input type="submit" value="Save Config">
+		</form>
+		<script>
+		
+		$(function() {
+			$('#dsn').focus();
+		})
+		
+		function validate() {
+			var dsn = $('#dsn');
+			var uid = $('#uid');
+			var pwd = $('#pwd');
+			var host = $('#host');
+			
+			if (dsn.val() == '') {
+				alert('Please enter a DSN');
+				dsn.focus();
+				return false;
+			} else if (uid.val() == '') {
+				alert('Please enter a Username');
+				uid.focus();
+				return false;
+			} else if (pwd.val() == '') {
+				alert('Please enter a Password');
+				pwd.focus();
+				return false;
+			} else if (host.val() == '') {
+				alert('Please enter a Host');
+				host.focus();
+				return false;
+			} else {
+				return true;
+			}
+		}
+		
+		</script>
 	</body>
 </html>

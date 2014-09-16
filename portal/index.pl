@@ -109,7 +109,7 @@ sub saveConfig {
 sub connectToDatabase {
 	$config = loadConfig();
 	
-	$db = DBI->connect($config->{database}->{dsn} . '; host=' . $config->{database}->{host}, $config->{database}->{uid}, $config->{database}->{pwd}, {
+	$db = DBI->connect($config->{database}->{dsn} . ';host=' . $config->{database}->{host}, $config->{database}->{uid}, $config->{database}->{pwd}, {
 		RaiseError => 0, 
 		PrintError => 1, 
 		HandleError => \&dbConnectErrorHandler

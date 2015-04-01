@@ -42,7 +42,7 @@ if ($hour < 10) { $hour = '0' . $hour; }
 if ($mday < 10) { $mday = '0' . $mday; }
 if ($mon < 10) { $mon = '0' . $mon; }
 
-my $ts = $year . '-' . $mon . '-' . $mday . ' ' . $hour . ':' . $min . ':' . $sec;
+my $ts = $year . $mon . $mday . $hour . $min . $sec;
 
 # Load Avg 1M
 open(FH, '>>' . $outputPath . 'la1.log');

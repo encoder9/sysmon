@@ -11,6 +11,9 @@ my $config = {};
 my $c = CGI->new();
 my $db = undef;
 my $command = $c->param('c');
+my $js = JSON->new();
+$js->allow_blessed(1);
+$js->convert_blessed(1);
 
 if ($command eq '') {
 	loadSite();
@@ -19,6 +22,8 @@ if ($command eq '') {
 		saveConfig();
 	} elsif ($command eq 'updateHostData') {
 		updateHostData();
+	} elsif ($command eq 'getData') {
+		getData();
 	}
 }
 
@@ -40,16 +45,10 @@ sub loadConfig {
 	my $data = <CONFIG>;
 	close(CONFIG);
 	
-	my $js = JSON->new();
-	$js->allow_blessed(1);
-	$js->convert_blessed(1);
 	return $js->utf8->decode($data);
 }
 
 sub saveConfigToFile {
-	my $js = JSON->new();
-	$js->allow_blessed(1);
-	$js->convert_blessed(1);
 	my $configString = $js->utf8->encode($config);
 	
 	open(CONFIG, '>config.json');
@@ -147,10 +146,6 @@ sub renderData {
 
 sub updateHostData {
 	my $p = $c->param('p');
-	
-	my $js = JSON->new();
-	$js->allow_blessed(1);
-	$js->convert_blessed(1);
 	my $payload = $js->utf8->decode($p);
 	
 	connectToDatabase();
@@ -265,4 +260,33 @@ sub updateHostData {
 	}
 	
 	print "Thank you\n";
+}
+
+sub getData {
+	my $what = $c->param('w');
+	my $sd = $c->param('sd');
+	my $ed = $c->param('ed');
+	
+	$sd =~ s/\-//g;
+	$sd =~ s/\://g;
+	$sd =~ s/\s//g;
+	
+	$ed =~ s/\-//g;
+	$ed =~ s/\://g;
+	$ed =~ s/\s//g;
+	
+	my $basePath = '../daemon/dataFiles/';
+	my @data = ();
+	open(FH, $basePath . $what . '.log');
+	
+	while(<FH>) {
+		chomp();
+		my @bitz = split(/:/);
+		
+		if ($bitz[0] >= $sd && $bitz[0] <= $ed) {
+			print $_ . "\n";
+		}
+	}
+	
+	close(FH);
 }
